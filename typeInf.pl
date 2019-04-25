@@ -51,6 +51,8 @@ infer(Code, T) :-
 bType(int).
 bType(float).
 bType(string).
+bType(char).
+bType(bool).
 bType(unit). /* unit type for things that are not expressions */
 /*  functions type.
     The type is a list, the last element is the return type
@@ -89,7 +91,16 @@ fType(iplus, [int,int,int]).
 fType(fplus, [float, float, float]).
 fType(fToInt, [float,int]).
 fType(iToFloat, [int,float]).
-fType(print, [_X, unit]). /* simple print */
+fType(print, [_X, unit]).
+ftype(  string_of_float,    [float, string] ).
+ftype(  string_of_int,      [int, string]   ).
+ftype(  int_of_string,      [string, int]   ).
+ftype(  float_of_string,    [string, float] ).
+ftype(  string_of_bool,     [bool, string]  ).
+fType(  bool_of_string,     [string, bool]  ).
+fType(  string_of_char,     [char, string]  ).
+fType(  char_of_string,     [string, char]  ).
+
 
 /* Find function signature
    A function is either buld in using fType or
