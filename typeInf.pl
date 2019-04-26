@@ -31,9 +31,22 @@ statementType(gvLet(Name, T, Code), unit):-
     basicType(T), /* make sure we have an infered type */
     asserta(gvar(Name, T)). /* add definition to database */
 
+/* If statement */
+statementType(if(Cond, TCode, FCode), T) :-
+    typeExp(Cond, bool),
+    typeCode(TCode, T),
+    typeCode(FCode, T),
+    bType(T).
+
+/* Expressions are statements */
+statementType(Expr, T) :-
+    typeExp(Expr, T),
+    bType(T).
+
 /* Code is simply a list of statements. The type is 
     the type of the last statement 
 */
+codeBlockType([], _T).
 codeBlockType([S], T):-statementType(S, T).
 codeBlockType([S, S2|Code], T):-
     statementType(S,_T),
@@ -48,6 +61,7 @@ infer(Code, T) :-
 /* Basic types
     TODO: add more types if needed
  */
+basicType(bool).
 basicType(int).
 basicType(float).
 basicType(string).
@@ -84,6 +98,8 @@ deleteGVars():-retractall(gvar), asserta(gvar(_X,_Y):-false()).
 
     TODO: add more functions
 */
+
+functionType('<', [float, float, bool]).
 
 functionType(iplus, [int,int,int]).
 functionType(fplus, [float, float, float]).
