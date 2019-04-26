@@ -31,6 +31,18 @@ typeStatement(gvLet(Name, T, Code), unit):-
     bType(T), /* make sure we have an infered type */
     asserta(gvar(Name, T)). /* add definition to database */
 
+/* Name = name of local variable
+    LVarType = type of local variable
+    Code = code from which we can infer type of local variable
+    assert that both are the same.
+*/
+typeStatement(letIn(Name, LVarType, Code), Code2, T):-
+    atom(Name),
+    typeExp(Code, LVarType),
+    bType(LVarType),
+    asserta(gvar(Name, LVarType)),
+    typeCode(Code2, T),
+    retract(gvar(Name, LVarType)).
 /* If statement */
 typeStatement(if(Cond, TCode, FCode), T) :-
     typeExp(Cond, bool),
@@ -49,7 +61,7 @@ typeStatement(Expr, T) :-
 typeCode([], _T).
 typeCode([S], T):-typeStatement(S, T).
 typeCode([S, S2|Code], T):-
-    typeStatement(S,_T),
+    typeStatement(S,unit),
     typeCode([S2|Code], T).
 
 /* top level function */
