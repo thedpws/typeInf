@@ -89,22 +89,6 @@ bType(unit). /* unit type for things that are not expressions */
 bType([H]):- bType(H).
 bType([H|T]):- bType(H), bType(T).
 
-/*
-    TODO: as you encounter global variable definitions
-    or global functions add their definitions to 
-    the database using:
-        asserta( gvar(Name, Type) )
-    To check the types as you encounter them in the code
-    use:
-        gvar(Name, Type) with the Name bound to the name.
-    Type will be bound to the global type
-    Examples:
-        g
-
-    Call the predicate deleveGVars() to delete all global 
-    variables. Best wy to do this is in your top predicate
-*/
-
 deleteGVars():-retractall(gvar), asserta(gvar(_X,_Y):-false()).
 
 /*  builtin functions
@@ -149,12 +133,8 @@ fType(  or,                 [bool,bool,bool]).
 fType(  and,                [bool,bool,bool]).
 fType(  concat_string,      [string,string,string]).
 fType(  concat_list,        [X,X,X]) :- is_list(X).
-
-
-/* Find function signature
-   A function is either buld in using fType or
-   added as a user definition with gvar(fct, List)
-*/
+fType(	apply,				[Y, X, T]) :- functionType(Y, [X|T]). % @@ operator
+fType(	reverse_apply,		[X, Y, T]) :- functionType(Y, [X|T]). % |> operator
 
 % Check the user defined functions first
 functionType(Name, Args):-
