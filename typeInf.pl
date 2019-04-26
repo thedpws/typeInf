@@ -53,6 +53,7 @@ bType(float).
 bType(string).
 bType(char).
 bType(bool).
+
 bType(unit). /* unit type for things that are not expressions */
 /*  functions type.
     The type is a list, the last element is the return type
@@ -87,11 +88,19 @@ deleteGVars():-retractall(gvar), asserta(gvar(_X,_Y):-false()).
     TODO: add more functions
 */
 
-fType(iplus, [int,int,int]).
-fType(fplus, [float, float, float]).
-fType(fToInt, [float,int]).
-fType(iToFloat, [int,float]).
-fType(print, [_X, unit]).
+/* These values allow arithmetic*/
+numBType(int).
+numBType(float).
+
+fType(  add,                [X,X,X]) :- numBType(X).
+fType(  subtract,           [X,X,X]) :- numBType(X).
+fType(  multiply,           [X,X,X]) :- numBType(X).
+fType(  divide,             [X,X,X]) :- numBType(X).
+fType(  exponentiate,       [float, float, float]).
+fType(  mod,                [int, int, int] ).
+fType(  int_of_float,       [float,int]     ).
+fType(  float_of_int,       [int,float]     ).
+fType(  print,              [_X, unit]      ).
 ftype(  string_of_float,    [float, string] ).
 ftype(  string_of_int,      [int, string]   ).
 ftype(  int_of_string,      [string, int]   ).
@@ -100,6 +109,20 @@ ftype(  string_of_bool,     [bool, string]  ).
 fType(  bool_of_string,     [string, bool]  ).
 fType(  string_of_char,     [char, string]  ).
 fType(  char_of_string,     [string, char]  ).
+fType(  negation,           [int,int]       ).
+fType(  negation,           [float, float]  ).
+fType(  negation,           [bool, bool]    ).
+fType(  equal,              [X,X,bool]      ).
+fType(  nequal,             [X,X,bool]      ).
+fType(  less_than,          [X,X,bool]      ).
+fType(  greater_than,       [X,X,bool]      ).
+fType(  lteq,               [X,X,bool]      ).
+fType(  gteq,               [X,X,bool]      ).
+fType(  compare,            [X,X,int]       ).
+fType(  or,                 [bool,bool,bool]).
+fType(  and,                [bool,bool,bool]).
+fType(  concat_string,      [string,string,string]).
+fType(  concat_list,        [X,X,X]) :- is_list(X).
 
 
 /* Find function signature
