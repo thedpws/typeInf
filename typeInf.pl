@@ -135,6 +135,9 @@ fType(  concat_string,      [string,string,string]).
 fType(  concat_list,        [X,X,X]) :- is_list(X).
 fType(	apply,				[Y, X, T]) :- functionType(Y, [X|T]). % @@ operator
 fType(	reverse_apply,		[X, Y, T]) :- functionType(Y, [X|T]). % |> operator
+fType(	max,				[X, X, X]).
+fType(	min,				[X, X, X]).
+fType(	abs,				[int, int]).
 
 % Check the user defined functions first
 functionType(Name, Args):-
