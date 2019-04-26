@@ -1,0 +1,45 @@
+
+# Basic operations
+
+#1. 5 > 3 ;; (* - : bool = true *)
+functionType(greater_than, [int, int, T]).
+
+#2. 5 < 3 ;; (* - : bool = false *)
+functionType(less_than, [int, int, T]).
+
+#3 5.0 < 3 ;; (* Error: 3 should be float *)
+functionType(less_than, [float, int, bool]).
+
+#4 "hello" < "hello" ;; (* - : bool = false *)
+functionType(less_than, [string, string, T]).
+
+#5 "hello" ^ "hello" ;; (* - : string = "hellohello" *)
+functionType(concat_string, [X, Y, Z]).
+
+#6 string_of_int 5.0 ;; (* Error: expected int but found float)
+functionType(string_of_int, [float, _]).
+
+#7 string_of_int 5 ;; (* String "5" *)
+functionType(string_of_int, [int, T]).
+
+#8 let x = 3;;
+
+#9 let x = 3 in x;;
+
+#10 let x = 3 in x + y;;
+
+# 11 let x = 3;; let y = x;;
+
+#12 let x = print "hello"; 3;;
+
+#13 let x = print "hello"; 3; 5;; (* Error *)
+
+#14  let x = 3 in x < 4.;; (* Error *)
+
+#15 add 5 (* int -> int *)
+functionType(apply, [add, int, T]).
+
+#16 5 |> add (* int -> int *)
+functionType(reverse_apply, [int, add, T]).
+
+#17 
