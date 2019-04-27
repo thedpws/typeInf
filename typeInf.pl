@@ -111,11 +111,11 @@ fType(  mod,                [int, int, int] ).
 fType(  int_of_float,       [float,int]     ).
 fType(  float_of_int,       [int,float]     ).
 fType(  print,              [_X, unit]      ).
-ftype(  string_of_float,    [float, string] ).
-ftype(  string_of_int,      [int, string]   ).
-ftype(  int_of_string,      [string, int]   ).
-ftype(  float_of_string,    [string, float] ).
-ftype(  string_of_bool,     [bool, string]  ).
+fType(  string_of_float,    [float, string] ).
+fType(  string_of_int,      [int, string]   ).
+fType(  int_of_string,      [string, int]   ).
+fType(  float_of_string,    [string, float] ).
+fType(  string_of_bool,     [bool, string]  ).
 fType(  bool_of_string,     [string, bool]  ).
 fType(  string_of_char,     [char, string]  ).
 fType(  char_of_string,     [string, char]  ).
@@ -133,8 +133,8 @@ fType(  or,                 [bool,bool,bool]).
 fType(  and,                [bool,bool,bool]).
 fType(  concat_string,      [string,string,string]).
 fType(  concat_list,        [X,X,X]) :- is_list(X).
-fType(	apply,				[Y, X, T]) :- functionType(Y, [X|T]). % @@ operator
-fType(	reverse_apply,		[X, Y, T]) :- functionType(Y, [X|T]). % |> operator
+fType(	apply,				[FName, Param1, T]) :- functionType(FName, [Param1|T]). % @@ operator
+fType(	reverse_apply,		[Param1, FName, T]) :- functionType(Fname, [Param1|T]). % |> operator
 fType(	max,				[X, X, X]).
 fType(	min,				[X, X, X]).
 fType(	abs,				[int, int]).
@@ -146,7 +146,7 @@ functionType(Name, Args):-
 
 % Check first built in functions
 functionType(Name, Args) :-
-    fType(Name, Args), !. % make deterministic
+    fType(Name, Args). % make deterministic
 
 % This gets wiped out but we have it here to make the linter happy
 gvar(_, _) :- false().

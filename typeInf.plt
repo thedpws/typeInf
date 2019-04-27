@@ -25,7 +25,7 @@ test(typeExp_bool_of_string) :-
     typeExp(bool_of_string(X), Y).
 
 test(typeExp_equal) :-
-    typeExp(equal(int, X), Y).
+    typeExp(equal(int, int), Y).
 
 test(typeExp_print) :-
     typeExp(print(string), Y).
@@ -33,16 +33,42 @@ test(typeExp_print) :-
 test(typeExp_or) :-
     typeExp(or(X, Y), Z).
 
-test(typeExp_apply) :-
-    typeExp(apply(Y, X), T).
-
-
 % this test should fail
 test(typeExp_add_F, [fail]) :-                    
     typeExp(add(int, int), bool).
 
 test(typeExp_add_T, [true(T == int)]) :-
     typeExp(add(int, int), T).
+
+test(greater_than) :-
+    functionType(greater_than, [int, int, T]).
+
+test(less_than_1) :-
+    functionType(less_than, [int, int, T]).
+
+% This test should fail
+test(less_than_2) :-
+    functionType(less_than, [float, int, bool]).
+
+test(less_than_3) :-
+    functionType(less_than, [string, string, T]).       
+
+% This test should fail
+test(string_of_int_1) :-
+    functionType(string_of_int, [float, _]).
+
+test(string_of_int_2) :-
+    functionType(string_of_int, [int, T]).                    
+
+test(typeExp_apply) :-
+    typeExp(apply(Y, X), T).
+
+test(typeExp_reverse_apply) :-
+    functionType(reverse_apply, [int, add, T]).
+
+test(if_Statement) :- 
+    
+
 
 % NOTE: use nondet as option to test if the test is nondeterministic
 
