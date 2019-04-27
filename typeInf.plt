@@ -10,64 +10,54 @@
 
 % tests for typeExp
 test(typeExp_add) :- 
-    typeExp(add(int,int), int).
+    functionType(add, [int, [Y, [X]]]).
 
 test(typeExp_multiply) :- 
-    typeExp(multiply(int, X), int).
+    functionType(multiply, [X, [Y, [int]]]).
 
 test(typeExp_subtract) :- 
-    typeExp(subtract(X, Y), Z).
+    functionType(subtract, [X, [Y, [Z]]]).
 
 test(typeExp_exponentiate) :-
-    typeExp(exponentiate(X, Y), Z).
+    functionType(exponentiate, [X, [Y, [Z]]]).
 
 test(typeExp_bool_of_string) :-
-    typeExp(bool_of_string(X), Y).
+    functionType(bool_of_string, [X, [Y]]).
 
 test(typeExp_equal) :-
-    typeExp(equal(int, int), Y).
+    functionType(equal, [int, [X, [Z]]]).
 
 test(typeExp_print) :-
-    typeExp(print(string), Y).
+    functionType(print, [string, [Y]]).
 
 test(typeExp_or) :-
-    typeExp(or(X, Y), Z).
+    functionType(or, [X, [Y, [Z]]]).
 
 test(greater_than) :-
-    functionType(greater_than, [int, int, T]).
+    functionType(greater_than, [int, [Y, [T]]]).
 
 test(less_than_1) :-
-    functionType(less_than, [int, int, T]).
+    functionType(less_than, [X, [int, [T]]]).
 
 % This test should fail
 test(less_than_2) :-
-    functionType(less_than, [float, int, bool]).
+    functionType(less_than, [float, [int, [bool]]]).
 
 test(less_than_3) :-
-    functionType(less_than, [string, string, T]).       
+    functionType(less_than, [string, [string, [T]]]).       
 
 % This test should fail
 test(string_of_int_1) :-
-    functionType(string_of_int, [float, _]).
+    functionType(string_of_int, [float, [_]]).
 
 test(string_of_int_2) :-
-    functionType(string_of_int, [int, T]).                    
+    functionType(string_of_int, [int, [T]]).                    
 
 test(typeExp_apply) :-
-    typeExp(apply(Y, X), T).
+    functionType(apply, [[X,Y], string, B]).
 
 test(typeExp_reverse_apply) :-
-    functionType(reverse_apply, [int, add, T]).
-
-test(if) :-
-    typeStatement(if(C, string, string), X).
-
-% this test should fail
-test(typeExp_add_F, [fail]) :-                    
-    typeExp(add(int, int), bool).
-
-test(typeExp_add_T, [true(T == int)]) :-
-    typeExp(add(int, int), T).
+    functionType(reverse_apply, [X, [int, Z], B]).
 
 % NOTE: use nondet as option to test if the test is nondeterministic
 
