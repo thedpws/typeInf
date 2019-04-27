@@ -28,7 +28,7 @@ functionType(string_of_int, [int, T]).
 
 #10 let x = 3 in x + y;;
 
-# 11 let x = 3;; let y = x;;
+#11 let x = 3;; let y = x;;
 
 #12 let x = print "hello"; 3;;
 
