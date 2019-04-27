@@ -37,10 +37,25 @@ functionType(string_of_int, [int, T]).
 #14  let x = 3 in x < 4.;; (* Error *)
 
 #15 add 5 (* int -> int *)
-functionType(apply, [add, int, T]).
+functionType(apply, [ADD, int, T]), functionType(add, ADD).
+
+#15 (int -> int) -> int -> int (* Should produce int *)
+functionType(apply, [ [int, [int]], int, T]).
+
+#16 (int -> float) -> int -> float
+functionType(apply, [ [int, [float]], int, T]).
+
+#18 print "hello"
+functionType(apply, [PRINT, string, T]), functionType(print, PRINT).
 
 #16 5 |> add (* int -> int *)
-functionType(reverse_apply, [int, add, T]).
+functionType(reverse_apply, [int, ADD, T]), functionType(add, ADD).
+
+#17 5.0 |> add 4.0 (* int *)
+functionType(reverse_apply, [float, ADD2, T]), functionType(apply, [ADD, float, ADD2]), functionType(add, ADD).
 
 #17 for (i = 0 to 10 do {}; done;
 typeStatement(for(i, int, int), [], unit).
+
+
+

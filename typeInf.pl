@@ -107,42 +107,45 @@ deleteGVars():-retractall(gvar), asserta(gvar(_X,_Y):-false()).
 numBType(int).
 numBType(float).
 
-fType(  add,                [X,X,X]) :- numBType(X).
-fType(  subtract,           [X,X,X]) :- numBType(X).
-fType(  multiply,           [X,X,X]) :- numBType(X).
-fType(  divide,             [X,X,X]) :- numBType(X).
-fType(  exponentiate,       [float, float, float]).
-fType(  mod,                [int, int, int] ).
-fType(  int_of_float,       [float,int]     ).
-fType(  float_of_int,       [int,float]     ).
-fType(  print,              [_X, unit]      ).
-fType(  string_of_float,    [float, string] ).
-fType(  string_of_int,      [int, string]   ).
-fType(  int_of_string,      [string, int]   ).
-fType(  float_of_string,    [string, float] ).
-fType(  string_of_bool,     [bool, string]  ).
-fType(  bool_of_string,     [string, bool]  ).
-fType(  string_of_char,     [char, string]  ).
-fType(  char_of_string,     [string, char]  ).
-fType(  negation,           [int,int]       ).
-fType(  negation,           [float, float]  ).
-fType(  negation,           [bool, bool]    ).
-fType(  equal,              [X,X,bool]      ).
-fType(  nequal,             [X,X,bool]      ).
-fType(  less_than,          [X,X,bool]      ).
-fType(  greater_than,       [X,X,bool]      ).
-fType(  lteq,               [X,X,bool]      ).
-fType(  gteq,               [X,X,bool]      ).
-fType(  compare,            [X,X,int]       ).
-fType(  or,                 [bool,bool,bool]).
-fType(  and,                [bool,bool,bool]).
-fType(  concat_string,      [string,string,string]).
-fType(  concat_list,        [X,X,X]) :- is_list(X).
-fType(	apply,				[FName, Param1, T]) :- functionType(FName, [Param1|T]). % @@ operator
-fType(	reverse_apply,		[Param1, FName, T]) :- functionType(Fname, [Param1|T]). % |> operator
-fType(	max,				[X, X, X]).
-fType(	min,				[X, X, X]).
-fType(	abs,				[int, int]).
+fType(  add,                [X,[X,[X]]]) :- numBType(X).
+fType(  subtract,           [X,[X,[X]]]) :- numBType(X).
+fType(  multiply,           [X,[X,[X]]]) :- numBType(X).
+fType(  divide,             [X,[X,[X]]]) :- numBType(X).
+fType(  exponentiate,       [float, [float, [float]]]).
+fType(  mod,                [int, [int, [int]]] ).
+fType(  int_of_float,       [float,[int]]     ).
+fType(  float_of_int,       [int,[float]]     ).
+fType(  print,              [_X, [unit]]      ).
+fType(  string_of_float,    [float, [string]] ).
+fType(  string_of_int,      [int, [string]]   ).
+fType(  int_of_string,      [string, [int]]   ).
+fType(  float_of_string,    [string, [float]] ).
+fType(  string_of_bool,     [bool, [string]]  ).
+fType(  bool_of_string,     [string, [bool]]  ).
+fType(  string_of_char,     [char, [string]]  ).
+fType(  char_of_string,     [string, [char]]  ).
+fType(  negation,           [int,[int]]       ).
+fType(  negation,           [float, [float]]  ).
+fType(  negation,           [bool, [bool]]    ).
+fType(  equal,              [X,[X,[bool]]]      ).
+fType(  nequal,             [X,[X,[bool]]]      ).
+fType(  less_than,          [X,[X,[bool]]]      ).
+fType(  greater_than,       [X,[X,[bool]]]      ).
+fType(  lteq,               [X,[X,[bool]]]     ).
+fType(  gteq,               [X,[X,[bool]]]      ).
+fType(  compare,            [X,[X,[int]]]       ).
+fType(  or,                 [bool,[bool,[bool]]]).
+fType(  and,                [bool,[bool,[bool]]]).
+fType(  concat_string,      [string,[string,[string]]]).
+fType(  concat_list,        [X,[X,[X]]]) :- is_list(X).
+%fType(	apply,				[Y, [X, [T]]]) :- functionType(Y, [X|T]). % @@ operator
+%fType(	reverse_apply,		[X, [Y, [T]]]) :- functionType(Y, [X|T]). % |> operat
+                                          
+fType(  apply,              [[A,B], A, B]   ).
+fType(  reverse_apply,      [A, [A, B], B]  ).
+fType(	max,				[X, [X, [X]]]       ).
+fType(	min,				[X, [X, [X]]]       ).
+fType(	abs,				[int, [int]]      ).
 
 % Check the user defined functions first
 functionType(Name, Args):-
