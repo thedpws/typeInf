@@ -9,8 +9,11 @@
 */
 
 % tests for typeExp
-test(typeExp_add) :- 
+test(typeExp_add_1) :- 
     functionType(add, [int, [Y, [X]]]).
+
+test(typeExp_add_2) :- 
+    functionType(apply, [ADD, int, T]), functionType(add, ADD).
 
 test(typeExp_multiply) :- 
     functionType(multiply, [X, [Y, [int]]]).
@@ -53,11 +56,21 @@ test(string_of_int_1) :-
 test(string_of_int_2) :-
     functionType(string_of_int, [int, [T]]).                    
 
-test(typeExp_apply) :-
+test(typeExp_apply_1) :-
     functionType(apply, [[X,Y], string, B]).
 
-test(typeExp_reverse_apply) :-
-    functionType(reverse_apply, [X, [int, Z], B]).
+test(typeExp_apply_2) :-
+    functionType(apply, [ [int, [int]], int, T]).
+
+test(typeExp_apply_3) :-
+    functionType(apply, [PRINT, string, T]), functionType(print, PRINT).
+
+test(typeExp_reverse_apply_1) :-
+    functionType(reverse_apply, [int, ADD, T]), functionType(add, ADD).
+
+test(typeExp_reverse_apply_2) :-
+    functionType(reverse_apply, [float, ADD2, T]), functionType(apply, [ADD, float, ADD2]), functionType(add, ADD).
+    
 
 % NOTE: use nondet as option to test if the test is nondeterministic
 
