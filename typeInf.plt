@@ -66,10 +66,6 @@ test(typeExp_apply) :-
 test(typeExp_reverse_apply) :-
     functionType(reverse_apply, [int, add, T]).
 
-test(if_Statement) :- 
-    
-
-
 % NOTE: use nondet as option to test if the test is nondeterministic
 
 % test for statement with state cleaning
