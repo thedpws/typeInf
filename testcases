@@ -42,4 +42,5 @@ functionType(apply, [add, int, T]).
 #16 5 |> add (* int -> int *)
 functionType(reverse_apply, [int, add, T]).
 
-#17 
+#17 for (i = 0 to 10 do {}; done;
+typeStatement(for(i, int, int), [], unit).

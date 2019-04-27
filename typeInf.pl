@@ -50,6 +50,11 @@ typeStatement(if(Cond, TCode, FCode), T) :-
     typeCode(FCode, T),
     bType(T).
 
+typeStatement(for(Var, int, int), Code, unit):-
+    asserta(gvar(Var, int)),
+    typeCode(Code, unit),
+    retract(gvar(Var, int)).
+
 /* Expressions are statements */
 typeStatement(Expr, T) :-
     typeExp(Expr, T),
